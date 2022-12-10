@@ -1,5 +1,5 @@
 +++ 
-draft = true
+draft = false
 date = 2022-12-09T19:30:48-06:00
 title = "Calculating Pi Using Random Numbers"
 description = "Using the coprime probabilities of random number pairs to calculate the value of Pi"
@@ -11,7 +11,7 @@ externalLink = ""
 series = []
 +++
 
-Calculating Pi is possible by using the probability of co-prime values in a large set of random numbers. This was inspired by Matt Parker’s YouTube video, [Generating Pi From 1,000 Random Numbers](https://youtu.be/RZBhSi_PwHU), posted in 2017. The repository discussed here uses the same methodology as Matt Parker used, but on a much larger scale. Matt Parker used 120 sided dice to calculate 1,000 random co-prime values. My approach uses the equivalent of 100,000,000,000 dice and calculates 100,000 co-prime values. In addition to this, I ran this full simulation 50,000 times, as opposed to once in Matt’s situation (to be fair, he did physically roll the dice 1,000 times, I just pressed ‘Enter’ on my laptop). Below is a walk through of the script and resulting data visualization. The repo for this project can be found [here](https://github.com/mattsunner/Ridiculous_Data_Viz/tree/main/PiCalc_by_Est_Random).
+Calculating Pi is possible by using the probability of co-prime values in a large set of random numbers. This was inspired by Matt Parker’s YouTube video, [Generating Pi From 1,000 Random Numbers](https://youtu.be/RZBhSi_PwHU), posted in 2017. This video is excellent at explaining the maths logic behind the formula, so I won't cover it here. The repository discussed here uses the same methodology as Matt Parker used, but on a much larger scale. Matt Parker used 120 sided dice to calculate 1,000 random co-prime values. My approach uses the equivalent of 100,000,000,000 sided die and calculates 100,000 co-prime pair values. In addition to this, I ran this full simulation 50,000 times, as opposed to once in Matt’s situation (to be fair, he did physically roll the dice 1,000 times, I just pressed ‘Enter’ on my laptop). Below is a walk through of the script and resulting data visualization. The repo for this project can be found [here](https://github.com/mattsunner/Ridiculous_Data_Viz/tree/main/PiCalc_by_Est_Random).
 
 The main function of the script to generate calculations of Pi is called prime_list_gen 
 
@@ -91,7 +91,7 @@ def connect_to_db(conn_file: str) -> object:
 
 This function attempts to connect to a local SQLite file and if it doesn’t exist, it creates it. This ensures the script will operate properly even if a .db file hasn’t been created yet. The SQLite table, called “results”, has a very simple schema to collect the one data point being calculated, the experimental value of Pi. 
 
-Lastly, there is a procedure to run the script and gather a command line input from the user. 
+Lastly, there is a procedure to run the script and gather a command line input from the user for the number of times the application should calculate Pi. 
 
 ```python
 if __name__ == '__main__':
@@ -202,6 +202,6 @@ The outputed data visualization shows the results on a scatter plot with two lin
 
 ![Figure 2](/images/post_images/pi-calc-fig2.png)
 
-This chart provides a clearer view of the difference between the two values, and illustrates how closely it is possible to estimate Pi using random numbers.
+Figure 2 provides a clearer view of the difference between the two values, and illustrates how closely it is possible to estimate Pi using random numbers.
 
-This project was put together over the course of a couple of days. In approaching it again, there are a few different strategies that I would apply. For one, even with Numpy, looping over the data is slower than with a compiled language. If I were to do this again, I would use a concurrent database, like MySQL, and Go in order to more quickly and efficiently generate data. In this case, I would also increase the maximum value for random number generation, the number of integers used to calculate Pi, as well as the full amount of trials run. Using more data and a larger pool of random numbers should statistically get the estimate of Pi closer to the real value.
+This project was put together over the course of a couple of days. In approaching it again, there are a few different strategies that I would apply. For one, even with Numpy, looping over the data is slower than with a compiled language. If I were to do this again, I would use a concurrent database, like MySQL, and Go in order to more quickly and efficiently generate data by taking advantage of goroutines. In this case, I would also increase the maximum value for random number generation, the number of integers used to calculate Pi, as well as the full amount of trials run. Using more data and a larger pool of random numbers should statistically get the estimate of Pi closer to the real value.
