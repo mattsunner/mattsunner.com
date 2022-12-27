@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Matthew Sunner</title>
+    <link>http://www.mattsunner.com/authors/matthew-sunner/</link>
+    <description>Recent content on Matthew Sunner</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 09 Dec 2022 19:30:48 -0600</lastBuildDate><atom:link href="http://www.mattsunner.com/authors/matthew-sunner/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Calculating Pi Using Random Numbers</title>
+      <link>http://www.mattsunner.com/posts/calculating-pi-with-random-numbers/</link>
+      <pubDate>Fri, 09 Dec 2022 19:30:48 -0600</pubDate>
+      
+      <guid>http://www.mattsunner.com/posts/calculating-pi-with-random-numbers/</guid>
+      <description>Calculating Pi is possible by using the probability of co-prime values in a large set of random numbers. This was inspired by Matt Parker’s YouTube video, Generating Pi From 1,000 Random Numbers, posted in 2017. This video is excellent at explaining the maths logic behind the formula, so I won&amp;rsquo;t cover it here. The repository discussed here uses the same methodology as Matt Parker used, but on a much larger scale.</description>
+    </item>
+    
+  </channel>
+</rss>

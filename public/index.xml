@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Matthew Sunner</title>
+    <link>http://www.mattsunner.com/</link>
+    <description>Recent content on Matthew Sunner</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 09 Dec 2022 19:30:48 -0600</lastBuildDate><atom:link href="http://www.mattsunner.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Calculating Pi Using Random Numbers</title>
+      <link>http://www.mattsunner.com/posts/calculating-pi-with-random-numbers/</link>
+      <pubDate>Fri, 09 Dec 2022 19:30:48 -0600</pubDate>
+      
+      <guid>http://www.mattsunner.com/posts/calculating-pi-with-random-numbers/</guid>
+      <description>Calculating Pi is possible by using the probability of co-prime values in a large set of random numbers. This was inspired by Matt Parker’s YouTube video, Generating Pi From 1,000 Random Numbers, posted in 2017. This video is excellent at explaining the maths logic behind the formula, so I won&amp;rsquo;t cover it here. The repository discussed here uses the same methodology as Matt Parker used, but on a much larger scale.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>http://www.mattsunner.com/about/</link>
+      <pubDate>Tue, 11 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.mattsunner.com/about/</guid>
+      <description>I write about cloud, business intelligence &amp;amp; Python.
+I am currently working as a business intelligence analyst with a focus on financial reporting, data governance &amp;amp; infrastructure. I have a background in financial analysis and consulting, with focuses on process automation, financial modeling, and infrastucture optimization. This experience has largely been through the lens of data engineering and business process improvements. I have extensive experience in working with both technical and operational teams in a cross functional capacity to implement highly technical solutions to solve business cases.</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>http://www.mattsunner.com/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.mattsunner.com/contact/</guid>
+      <description>Please feel free to reach out to me through any medium below!
+Twitter: here LinkedIn: here GitHub: here I can also be reached be email at matt@mattsunner.com</description>
+    </item>
+    
+  </channel>
+</rss>

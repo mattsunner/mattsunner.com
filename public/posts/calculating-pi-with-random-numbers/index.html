@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+  Calculating Pi Using Random Numbers · Matthew Sunner
+</title>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content; default-src 'self'; child-src 'self'; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net/; form-action 'self'; frame-src 'self'; img-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/ https://cdn.jsdelivr.net/; script-src 'self' 'unsafe-inline' https://www.google-analytics.com; prefetch-src 'self'; connect-src 'self' https://www.google-analytics.com;">
+
+
+
+
+<meta name="author" content="Matthew Sunner">
+<meta name="description" content="Using the coprime probabilities of random number pairs to calculate the value of Pi">
+<meta name="keywords" content="blog,developer, BI, Data, Data Engineering, Business Intelligence">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Calculating Pi Using Random Numbers"/>
+<meta name="twitter:description" content="Using the coprime probabilities of random number pairs to calculate the value of Pi"/>
+
+<meta property="og:title" content="Calculating Pi Using Random Numbers" />
+<meta property="og:description" content="Using the coprime probabilities of random number pairs to calculate the value of Pi" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.mattsunner.com/posts/calculating-pi-with-random-numbers/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-09T19:30:48-06:00" />
+<meta property="article:modified_time" content="2022-12-09T19:30:48-06:00" />
+
+
+
+
+<link rel="canonical" href="http://www.mattsunner.com/posts/calculating-pi-with-random-numbers/">
+
+
+<link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.7f9d180e3b3bebba9ba80d55eed1255c35e00764872854736d6ad7db38884ffc.css" integrity="sha256-f50YDjs767qbqA1V7tElXDXgB2SHKFRzbWrX2ziIT/w=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.216e36d3eaf6f4cdfd67dc1200c49a8169e6478102977b3e9ac51a064c57054c.css" integrity="sha256-IW420&#43;r29M39Z9wSAMSagWnmR4ECl3s&#43;msUaBkxXBUw=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<meta name="generator" content="Hugo 0.108.0">
+
+
+
+
+
+  </head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      Matthew Sunner
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/about/">About</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/contact/">Contact me</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://www.mattsunner.com/posts/calculating-pi-with-random-numbers/">
+              Calculating Pi Using Random Numbers
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-12-09T19:30:48-06:00">
+                December 9, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              7-minute read
+            </span>
+          </div>
+          <div class="authors">
+  <i class="fa fa-user" aria-hidden="true"></i>
+    <a href="/authors/matthew-sunner/">Matthew Sunner</a></div>
+
+          
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/python/">Python</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/maths/">Maths</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/data-visualization/">Data Visualization</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>Calculating Pi is possible by using the probability of co-prime values in a large set of random numbers. This was inspired by Matt Parker’s YouTube video, <a href="https://youtu.be/RZBhSi_PwHU">Generating Pi From 1,000 Random Numbers</a>, posted in 2017. This video is excellent at explaining the maths logic behind the formula, so I won&rsquo;t cover it here. The repository discussed here uses the same methodology as Matt Parker used, but on a much larger scale. Matt Parker used 120 sided dice to calculate 1,000 random co-prime values. My approach uses the equivalent of 100,000,000,000 sided die and calculates 100,000 co-prime pair values. In addition to this, I ran this full simulation 50,000 times, as opposed to once in Matt’s situation (to be fair, he did physically roll the dice 1,000 times, I just pressed ‘Enter’ on my laptop). Below is a walk through of the script and resulting data visualization. The repo for this project can be found <a href="https://github.com/mattsunner/Ridiculous_Data_Viz/tree/main/PiCalc_by_Est_Random">here</a>.</p>
+<p>The main function of the script to generate calculations of Pi is called prime_list_gen</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="font-weight:bold">def</span> prime_list_gen(max_pair_value: int, num_of_trials: int) -&gt; int:
+</span></span><span style="display:flex;"><span>    <span style="font-style:italic">&#34;&#34;&#34;prime_list_gen - Method to calculate the number of prime number GCD pairs. The 
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    function is customized to a user input maximum pair value and set number of trials to run.
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    Args:
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        max_pair_value (int): Maximum value for coprime computation
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        num_of_trials (int): Number of times the computation should run to sum up the number
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        of coprime values
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        int: Sum of coprime values found out of the number of trials done
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    x = 0
+</span></span><span style="display:flex;"><span>    prime_counter = 0
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">for</span> x <span style="font-weight:bold">in</span> range(0, num_of_trials):
+</span></span><span style="display:flex;"><span>        <span style="font-style:italic"># Pair Assignment</span>
+</span></span><span style="display:flex;"><span>        pair_1 = random.randint(0, max_pair_value)
+</span></span><span style="display:flex;"><span>        pair_2 = random.randint(0, max_pair_value)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">if</span> math.gcd(pair_1, pair_2) == 1:
+</span></span><span style="display:flex;"><span>            prime_counter += 1
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        x += 1
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">return</span> prime_counter
+</span></span></code></pre></div><p>The function takes in two arguments, a max value for the random number generator and a max trial integer, for the number of iterations used to calculate the co-prime probability in a set of data pairs. The function keeps a running sum of the number of co-prime pairs and returns this as an integer.</p>
+<p>The above function was the original implementation, which ran horribly slow, given the inefficient looping and calculations. A second function, prime_array_gen, was created to leverage Numpy array operations. The function below performs the exact same steps in a much more efficient manner.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="font-weight:bold">def</span> prime_array_gen(max_pair_value: int, num_of_trials: int) -&gt; int:
+</span></span><span style="display:flex;"><span>    <span style="font-style:italic">&#34;&#34;&#34;prime_array_gen - Rebuild of prime_list_gen function to calculate the number of experimental prime
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    number GCD pairs. Uses custom values for random number maximums and the number of trials used to calcualte.
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    Args:
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        max_pair_value (int): Maximum value for coprime computation
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        num_of_trials (int): Number of times the computation should run to sum up the number
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        of coprime values
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        int: Sum of coprime values found out of the number of trials done
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    primes_range_array = np.array([np.gcd(np.random.randint(max_pair_value), np.random.randint(max_pair_value)) <span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(num_of_trials)])
+</span></span><span style="display:flex;"><span>    filtered_primes_array = np.where(primes_range_array == 1, 1, 0) <span style="font-style:italic"># Catches where GCD is 1</span>
+</span></span><span style="display:flex;"><span>    sum_primes = np.sum(filtered_primes_array)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">return</span> sum_primes
+</span></span></code></pre></div><p>Next, there is a boilerplate function for connecting to a local SQLite database using the built in driver in Python.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="font-weight:bold">def</span> connect_to_db(conn_file: str) -&gt; object:
+</span></span><span style="display:flex;"><span>    <span style="font-style:italic">&#34;&#34;&#34;connect_to_db - SQLite3 connection function based on whether or not a db exists.
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    Args:
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        conn_file (str): Path the database file to be used
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">        object: SQLite3 connection object
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">if</span> os.path.exists(conn_file):
+</span></span><span style="display:flex;"><span>        conn = sqlite3.connect(conn_file)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">return</span> conn
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">else</span>:
+</span></span><span style="display:flex;"><span>        conn = sqlite3.connect(conn_file)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        cur.execute(<span style="font-style:italic">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">                CREATE TABLE results (
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">                    id integer PRIMARY KEY,
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">                    result REAL
+</span></span></span><span style="display:flex;"><span><span style="font-style:italic">                ); &#39;&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">return</span> conn
+</span></span></code></pre></div><p>This function attempts to connect to a local SQLite file and if it doesn’t exist, it creates it. This ensures the script will operate properly even if a .db file hasn’t been created yet. The SQLite table, called “results”, has a very simple schema to collect the one data point being calculated, the experimental value of Pi.</p>
+<p>Lastly, there is a procedure to run the script and gather a command line input from the user for the number of times the application should calculate Pi.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="font-weight:bold">if</span> __name__ == <span style="font-style:italic">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    <span style="font-style:italic"># SQLite Config</span>
+</span></span><span style="display:flex;"><span>    conn = connect_to_db(<span style="font-style:italic">&#39;primesPi.db&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cur = conn.cursor()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="font-style:italic"># User Inputs</span>
+</span></span><span style="display:flex;"><span>    max = 100_000_000_000
+</span></span><span style="display:flex;"><span>    trials = 100_000
+</span></span><span style="display:flex;"><span>    iterations = int(input(<span style="font-style:italic">&#39;Enter the Number of times the Script Should Calculate Pi: &#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="font-style:italic"># Actual Logic Run</span>
+</span></span><span style="display:flex;"><span>    <span style="font-style:italic"># Looping through the iterations of full trials</span>
+</span></span><span style="display:flex;"><span>    i = 0
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">for</span> i <span style="font-weight:bold">in</span> range(0, iterations):
+</span></span><span style="display:flex;"><span>        print(<span style="font-style:italic">&#39;Calculating...&#39;</span>)
+</span></span><span style="display:flex;"><span>        primes = prime_array_gen(max, trials)
+</span></span><span style="display:flex;"><span>        prob = primes / trials
+</span></span><span style="display:flex;"><span>        pi_est = math.sqrt(6 / prob)
+</span></span><span style="display:flex;"><span>        cur.execute(<span style="font-style:italic">&#39;INSERT INTO results (result) VALUES (?)&#39;</span>, (pi_est,))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        print(<span style="font-style:italic">f</span><span style="font-style:italic">&#39;Trial </span><span style="font-weight:bold;font-style:italic">{</span>i<span style="font-weight:bold;font-style:italic">}</span><span style="font-style:italic"> Completed...Pi = </span><span style="font-weight:bold;font-style:italic">{</span>pi_est<span style="font-weight:bold;font-style:italic">}</span><span style="font-style:italic">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        i += 1
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="font-style:italic"># Save all content to the database and close out the connection</span>
+</span></span><span style="display:flex;"><span>    conn.commit()    
+</span></span><span style="display:flex;"><span>    conn.close()
+</span></span></code></pre></div><p>For this script, the maximum number for the random number generation is 100,000,000,000 and the number of trials for each calculation of Pi is 100,000. These numbers were significantly large enough to yield a decent probability pool for the Pi calculation, but also manageable enough to create 50,000 total iterations of calculations. Moving the trials number up to 1,000,000 took the script from a few hours to calculate Pi 50,000 times up to over a day on my local machine. This snipet also contains the formula being used to calculate Pi, the square root of 6 divided by the probability of a co-prime value out of the total pool of values.</p>
+<p>After all of the calculations are done, it is time to put together a quick visualization to see how we did. This was done in a Jupyter Notebook to allow for easier iteration and styling, but could be done in a normal .py file as well.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="font-weight:bold">import</span> <span style="font-weight:bold">pandas</span> <span style="font-weight:bold">as</span> <span style="font-weight:bold">pd</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">import</span> <span style="font-weight:bold">plotly.express</span> <span style="font-weight:bold">as</span> <span style="font-weight:bold">plt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">import</span> <span style="font-weight:bold">sqlite3</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">import</span> <span style="font-weight:bold">math</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-style:italic"># ONLY RUN THIS CELL ONCE TO LOAD IN THE DATA AND CLOSE OUT THE CONNECTION; DONE SO DATA CAN BE GENERATED INTO THE DB WHILE THE ANALYSIS IS HAPPENING</span>
+</span></span><span style="display:flex;"><span><span style="font-style:italic"># Load in primesPi.db</span>
+</span></span><span style="display:flex;"><span>file_name = <span style="font-style:italic">&#39;primesPi.db&#39;</span>
+</span></span><span style="display:flex;"><span>conn = sqlite3.connect(file_name)
+</span></span><span style="display:flex;"><span>sql = <span style="font-style:italic">&#39;SELECT * FROM results;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df = pd.read_sql(sql, conn)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>conn.close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df.info()
+</span></span><span style="display:flex;"><span>df.head(15)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-style:italic"># Mathmatical Analysis on the Result Table</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df_median = df[<span style="font-style:italic">&#39;result&#39;</span>].median()
+</span></span><span style="display:flex;"><span>print(df_median)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df_average = df[<span style="font-style:italic">&#39;result&#39;</span>].mean()
+</span></span><span style="display:flex;"><span>print(df_average)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-style:italic"># Figure #1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fig = plt.scatter(df, x=df[<span style="font-style:italic">&#39;id&#39;</span>], y=df[<span style="font-style:italic">&#39;result&#39;</span>],
+</span></span><span style="display:flex;"><span>                  title=<span style="font-style:italic">f</span><span style="font-style:italic">&#39;Pi Estimate Compared to Fixed Value of Pi: Mean Estimate - </span><span style="font-weight:bold;font-style:italic">{</span>df_median<span style="font-weight:bold;font-style:italic">}</span><span style="font-style:italic">&#39;</span>,
+</span></span><span style="display:flex;"><span>                  labels={<span style="font-style:italic">&#39;id&#39;</span>: <span style="font-style:italic">&#39;Id of Test Run&#39;</span>, <span style="font-style:italic">&#39;result&#39;</span>: <span style="font-style:italic">&#39;Estimated Value of Pi&#39;</span>},
+</span></span><span style="display:flex;"><span>                  )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fig.add_shape(type=<span style="font-style:italic">&#39;line&#39;</span>,
+</span></span><span style="display:flex;"><span>                x0=0,
+</span></span><span style="display:flex;"><span>                y0=math.pi,
+</span></span><span style="display:flex;"><span>                x1=50000,
+</span></span><span style="display:flex;"><span>                y1=math.pi,
+</span></span><span style="display:flex;"><span>                line=dict(color=<span style="font-style:italic">&#39;Red&#39;</span>,), <span style="font-style:italic"># Hard Coded Value Line</span>
+</span></span><span style="display:flex;"><span>                xref=<span style="font-style:italic">&#39;x&#39;</span>,
+</span></span><span style="display:flex;"><span>                yref=<span style="font-style:italic">&#39;y&#39;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fig.add_shape(type=<span style="font-style:italic">&#39;line&#39;</span>,
+</span></span><span style="display:flex;"><span>                x0=0,
+</span></span><span style="display:flex;"><span>                y0=df[<span style="font-style:italic">&#39;result&#39;</span>].mean(),
+</span></span><span style="display:flex;"><span>                x1=50000,
+</span></span><span style="display:flex;"><span>                y1=df[<span style="font-style:italic">&#39;result&#39;</span>].mean(),
+</span></span><span style="display:flex;"><span>                line=dict(color=<span style="font-style:italic">&#39;Green&#39;</span>,), <span style="font-style:italic"># Mean Pi Estimate Line</span>
+</span></span><span style="display:flex;"><span>                xref=<span style="font-style:italic">&#39;x&#39;</span>,
+</span></span><span style="display:flex;"><span>                yref=<span style="font-style:italic">&#39;y&#39;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fig.show()
+</span></span></code></pre></div><p>The notebook is fairly straight forward in what it does. The notebook loads in the SQLite database contents into a two feature dataframe, the id and results, then performs a couple of math analyses on the dataframe, before finally producing a data visualization.</p>
+<p><img src="/images/post_images/pi-calc-fig1.png" alt="Figure 1"></p>
+<p>The outputed data visualization shows the results on a scatter plot with two lines superimposed over the data points. The red line on the chart is the value of Pi, as it is built into Python. The green line represents the mean value of all 50,000 Pi calculations. In the above chart, these delineation is difficult to make out…</p>
+<p><img src="/images/post_images/pi-calc-fig2.png" alt="Figure 2"></p>
+<p>Figure 2 provides a clearer view of the difference between the two values, and illustrates how closely it is possible to estimate Pi using random numbers.</p>
+<p>This project was put together over the course of a couple of days. In approaching it again, there are a few different strategies that I would apply. For one, even with Numpy, looping over the data is slower than with a compiled language. If I were to do this again, I would use a concurrent database, like MySQL, and Go in order to more quickly and efficiently generate data by taking advantage of goroutines. In this case, I would also increase the maximum value for random number generation, the number of integers used to calculate Pi, as well as the full amount of trials run. Using more data and a larger pool of random numbers should statistically get the estimate of Pi closer to the real value.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2021 -
+    
+    2022
+     Matthew Sunner 
+    ·
+    
+    Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="/js/coder.min.27afce394fb6284f521b3fbc9f6a8326342333c3092267f3944d770489876fed.js" integrity="sha256-J6/OOU&#43;2KE9SGz&#43;8n2qDJjQjM8MJImfzlE13BImHb&#43;0="></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

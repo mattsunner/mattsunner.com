@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Matthew Sunner</title>
+    <link>http://www.mattsunner.com/tags/</link>
+    <description>Recent content in Tags on Matthew Sunner</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 09 Dec 2022 19:30:48 -0600</lastBuildDate><atom:link href="http://www.mattsunner.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data Visualization</title>
+      <link>http://www.mattsunner.com/tags/data-visualization/</link>
+      <pubDate>Fri, 09 Dec 2022 19:30:48 -0600</pubDate>
+      
+      <guid>http://www.mattsunner.com/tags/data-visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Maths</title>
+      <link>http://www.mattsunner.com/tags/maths/</link>
+      <pubDate>Fri, 09 Dec 2022 19:30:48 -0600</pubDate>
+      
+      <guid>http://www.mattsunner.com/tags/maths/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>http://www.mattsunner.com/tags/python/</link>
+      <pubDate>Fri, 09 Dec 2022 19:30:48 -0600</pubDate>
+      
+      <guid>http://www.mattsunner.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
