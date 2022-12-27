@@ -1,6 +1,6 @@
 +++ 
 draft = false
-date = 2022-12-27T08:54:46-06:00
+date = 2022-12-26T22:36:48-06:00
 title = "Creating a Data Science & EDA Template with Docker"
 description = "Overview of the Docker EDA template used for data science projects"
 slug = "docker-eda-template"
