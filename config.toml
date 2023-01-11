@@ -9,6 +9,8 @@ pygmentsCodeFences = true
 pygmentsCodeFencesGuessSyntax = true
 enableEmoji = true
 
+googleAnalytics = "G-NMRM7TTWEJ"
+
 [params]
 author = "Matthew Sunner"
 description = "Matthew Sunner's Personal Website"
@@ -57,7 +59,7 @@ prefetchsrc = ["'self'"]
 # connect-src directive – defines valid targets for to XMLHttpRequest (AJAX), WebSockets or EventSource
 connectsrc = ["'self'", "https://www.google-analytics.com"]
 
-googleAnalytics = "G-NMRM7TTWEJ"
+
 
 [taxonomies]
 category = "categories"
